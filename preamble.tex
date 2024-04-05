@@ -1,0 +1,207 @@
+% Inspired by the book Modern LaTeX and the corresponding source code 
+% by Matt Kline (https://github.com/mrkline/modern-latex).
+
+\usepackage[a5paper,
+            inner=0.65in,outer=0.55in,top=0.75in,bottom=0.5in,
+            footnotesep=11bp,
+            footskip=3em,
+            includefoot,
+            ]{geometry}
+
+\usepackage[fleqn]{amsmath}
+
+\usepackage{fontspec}
+\usepackage{anyfontsize}
+
+\setmainfont[
+    Ligatures=TeX,
+    Numbers={Proportional,Lowercase},
+    ]{EBGaramond-Regular}
+
+\setmonofont[Scale=0.6]{Victor Mono}
+
+\usepackage{microtype}
+\usepackage[perpage,bottom,symbol*]{footmisc}
+
+\deffootnote[1em]{1em}{1em}{\thefootnotemark}
+\setfootnoterule{0.8\textwidth}
+
+\DeclareTOCStyleEntry[%
+    beforeskip=8bp,
+    entryformat = \bfseries,
+    entrynumberformat = \addfontfeature{Numbers={Tabular,Uppercase}},
+    pagenumberformat = \addfontfeature{Numbers={Tabular,Uppercase}},
+    linefill = \TOCLineLeaderFill
+]{tocline}{chapter}
+\DeclareTOCStyleEntry[%
+    beforeskip=1bp,
+    entrynumberformat = \addfontfeature{Numbers={Tabular,Uppercase}},
+    pagenumberformat = \addfontfeature{Numbers={Tabular,Uppercase}},
+    indent=0.4in 
+]{tocline}{section}
+\DeclareTOCStyleEntry[%
+    beforeskip=0bp,
+    entrynumberformat = \addfontfeature{Numbers={Tabular,Uppercase}},
+    pagenumberformat = \addfontfeature{Numbers={Tabular,Uppercase}},
+    indent=0.6in 
+]{tocline}{subsection}
+
+\addtokomafont{descriptionlabel}{\rmfamily}
+\setkomafont{disposition}{\rmfamily}
+\addtokomafont{chapter}{\addfontfeature{Numbers=Uppercase}}
+\setkomafont{section}{\Large\itshape}
+\setkomafont{subsection}{\large\itshape}
+
+\setcapwidth[c]{.75\textwidth}
+\setkomafont{caption}{\sffamily\footnotesize}
+\setkomafont{captionlabel}{\sffamily\footnotesize}
+\renewcommand*{\figureformat}{}
+\renewcommand*{\tableformat}{}
+\renewcommand*{\captionformat}{}
+
+\usepackage{enumitem}
+\setlist[enumerate]{font=\addfontfeatures{Numbers=Uppercase}}
+\setlist[description]{leftmargin=1em}
+
+\usepackage{tabularx}
+
+\usepackage[draft=false]{scrlayer-scrpage}
+\clearpairofpagestyles
+\pagestyle{scrheadings}
+\setkomafont{pagefoot}{\upshape}
+\lefoot*{\thepage}
+\rofoot*{\thepage}
+
+\usepackage{changepage}
+\usepackage{multicol}
+
+\usepackage{endnotes}
+\renewcommand\makeenmark{{\addfontfeature{VerticalPosition=Superior}\theenmark}}
+
+\usepackage{scrhack}
+
+% Python formatting
+% See
+% https://tex.stackexchange.com/questions/83882/how-to-highlight-python-syntax-in-latex-listings-lstinputlistings-command
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Python listings
+
+% Python style 
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttfamily\linespread{0.7}\selectfont,
+keywordstyle=\ttfamily\bfseries\linespread{0.7}\selectfont\color{deepblue},
+%morekeywords={self},              % Add keywords here
+%emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttfamily\bfseries\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false,
+numbers=left,
+numberstyle=\ttfamily\small
+}}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ini listings
+
+\lstdefinelanguage{Ini}
+{
+    basicstyle=\ttfamily\linespread{0.7}\selectfont,
+    columns=fullflexible,
+    morecomment=[s][\color{black}\bfseries]{[}{]},
+    morecomment=[l]{\#},
+    morecomment=[l]{;},
+    commentstyle=\color{gray}\ttfamily\linespread{0.7}\selectfont,
+    morekeywords={},
+    otherkeywords={=,:},
+    keywordstyle={\color{green}\bfseries}
+}
+
+% Ini style 
+\newcommand\inistyle{\lstset{
+language=Ini,
+frame=tb,                         % Any extra options here
+showstringspaces=false,
+numbers=left,
+numberstyle=\ttfamily\small
+}}
+
+% Ini environment
+\lstnewenvironment{ini}[1][]
+{
+\inistyle
+\lstset{#1}
+}
+{}
+
+% Ini for external files
+\newcommand\iniexternal[2][]{{
+\inistyle
+\lstinputlisting[#1]{#2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figure environments 
+
+\newenvironment{leftfigure}
+    {\par\vspace{0.5\baselineskip minus 0.3\baselineskip}\begin{adjustwidth}{22bp}{0pt}}
+    {\end{adjustwidth}\vspace{0.5\baselineskip minus 0.3\baselineskip}}
+
+\newenvironment{flushleftfigure}
+    {\par\vspace{0.5\baselineskip minus 0.3\baselineskip}\noindent\ignorespacesafterend}
+    {\vspace{0.5\baselineskip minus 0.3\baselineskip}\par\noindent\ignorespacesafterend}
+
+\newenvironment{centerfigure}
+    {\par\vspace{0.5\baselineskip minus 0.3\baselineskip}\begin{adjustwidth}{22bp}\centering}
+    {\end{adjustwidth}\vspace{0.5\baselineskip minus 0.3\baselineskip}}
+
+\usepackage{graphicx}
+\usepackage{csquotes}
+
+\usepackage[unicode,pdfusetitle,hidelinks]{hyperref}
+
+\newcommand{\punckern}{\kern-0.2ex}
+\newcommand{\quotekern}{\kern-0.6ex}
+
+\newcommand{\monobox}[1]{\mbox{\texttt{#1}}}
+\newcommand{\introduce}[1]{\textit{#1}}
+\newcommand{\acronym}[1]{\textsc{\addfontfreature{LetterSpace=5}#1}}
+\newcommand{\chapref}[1]{chapter!\ref{#1}}
+\newcommand{\http}[1]{\href{http://#1}{\texttt{http://#1}}}
+\newcommand{\https}[1]{\href{https://#1}{\texttt{https://#1}}}
+\newcommand{\edition}{First edition}
+
+\makeatletter
+\let\runauthor\@author
+\let\rundate\@date
+\let\runtitle\@title
+\makeatother
+
+\emergencystretch=1ex
+\widowpenalty=10000
+\clubpenalty=10000
+

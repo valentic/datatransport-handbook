@@ -1,0 +1,42 @@
+% Inspired by the book Modern LaTeX and the corresponding source code 
+% by Matt Kline (https://github.com/mrkline/modern-latex).
+
+
+\documentclass[fontsize=11bp, numbers=endperiod, draft=false]{scrbook}
+
+\input{preamble}
+
+\title{The Data Transport Network Handbook}
+\author{Todd Valentic}
+\date{\today}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Front matter
+
+\input{front}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main matter 
+
+\mainmatter
+\setlength\parindent{14bp}
+
+\pagenumbering{arabic}
+\setcounter{page}{1} % Reset page numbering after the TOC
+\cleardoublepage
+
+\input{intro}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Back matter 
+
+\appendix
+\renewcommand{\chapterheadstartvskip}{\vspace{0.15in}}
+
+\input{history}
+\input{back}
+
+\end{document}
+
